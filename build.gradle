@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'de.simax_dev.datapack'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.12.7.1')
+}
+
+application {
+    mainClass = "de.simax_dev.datapack_test.Main"
+}
+
+test {
+    useJUnitPlatform()
+}
