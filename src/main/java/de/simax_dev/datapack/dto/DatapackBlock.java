@@ -3,8 +3,8 @@ package de.simax_dev.datapack.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatapackBlock {
-    private final List<DatapackExecution> commands = new ArrayList<>();
+public abstract class DatapackBlock {
+    private final List<String> commands = new ArrayList<>();
     private String base = null;
 
     public DatapackBlock() { }
@@ -13,23 +13,17 @@ public class DatapackBlock {
     }
 
     public void addCommand(String command) {
-        this.commands.add(new DatapackExecution(command));
+        this.commands.add(base == null ? command : (base + " " + command));
     }
+
     public void addBlock(DatapackBlock block) {
-        this.commands.add(new DatapackExecution(block));
+        this.commands.addAll(block.getCommands());
     }
 
-    public List<String> loadCommands() {
-        List<String> result = new ArrayList<>();
-
-        this.commands.forEach(command -> {
-            if (command.isCommand()) {
-                result.add(command.getCommand());
-            } else if (command.isDatapackBlock()) {
-                result.addAll(command.getDatapackBlock().loadCommands());
-            }
-        });
-
-        return result;
+    public List<String> getCommands() {
+        return this.commands;
+    }
+    public void clearCommands() {
+        this.commands.clear();
     }
 }
